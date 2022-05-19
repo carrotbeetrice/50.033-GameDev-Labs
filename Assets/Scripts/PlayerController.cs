@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private int score = 0;
     private bool countScoreState = false;
     private Animator marioAnimator;
+    private AudioSource marioAudio;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
         marioBody = GetComponent<Rigidbody2D>();
         marioSprite = GetComponent<SpriteRenderer>();
         marioAnimator = GetComponent<Animator>();
+        marioAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -54,6 +56,7 @@ public class PlayerController : MonoBehaviour
         // When jumping, Gomba is near Mario and we haven't registered our score
         if (!onGroundState && countScoreState) 
         {
+            marioAnimator.SetBool("onGround", onGroundState);
             if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
             {
                 countScoreState = false;
@@ -110,5 +113,9 @@ public class PlayerController : MonoBehaviour
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.name);
         }
+    }
+
+    void PlayJumpSound() {
+        marioAudio.PlayOneShot(marioAudio.clip);
     }
 }
