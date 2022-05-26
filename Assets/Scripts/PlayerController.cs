@@ -56,7 +56,6 @@ public class PlayerController : MonoBehaviour
         // When jumping, Gomba is near Mario and we haven't registered our score
         if (!onGroundState && countScoreState) 
         {
-            marioAnimator.SetBool("onGround", onGroundState);
             if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
             {
                 countScoreState = false;
@@ -88,16 +87,19 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown("space") && onGroundState) {
             marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
             onGroundState = false;
+            marioAnimator.SetBool("onGround", onGroundState);
             countScoreState = true; // Check if Gomba is underneath when jumping
+            PlayJumpSound();
         }
            
     }
 
-    // Called when the cube hits the floor
     private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.CompareTag("Ground"))
+        if (other.gameObject.CompareTag("Ground")  || other.gameObject.CompareTag("Obstacles"))
         {
+            Debug.Log("Mario collided with " + other.gameObject.tag);
             onGroundState = true; // Back on ground
+            marioAnimator.SetBool("onGround", onGroundState);
             countScoreState = false; // Reset score state
             // marioBody.velocity = Vector2.zero;
             scoreText.text = "Score: " + score.ToString();
@@ -107,7 +109,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("Collided with Gomba!");
+            Debug.Log("Mario collided with Gomba");
 
             // Game over on collision; restart scene
             Scene scene = SceneManager.GetActiveScene();
