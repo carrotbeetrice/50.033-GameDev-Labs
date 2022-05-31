@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     private float originalX;
-    private float maxOffset = 5.0f;
+    private float maxOffset = 4.0f;
     private float enemyPatroltime = 2.0f;
     private int moveRight = -1;
     private Vector2 velocity;
@@ -42,6 +42,15 @@ public class EnemyController : MonoBehaviour
             moveRight *= -1;
             ComputeVelocity();
             MoveGomba();
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D other) 
+    {
+        if (other.gameObject.CompareTag("Obstacles")) 
+        {
+            Debug.Log("Bonk");
+            moveRight *= -1;
         }
     }
 }

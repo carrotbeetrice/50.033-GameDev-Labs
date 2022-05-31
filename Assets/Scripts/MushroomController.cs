@@ -4,44 +4,49 @@ using UnityEngine;
 
 public class MushroomController : MonoBehaviour
 {
-    public float speed = 10;
+
+    private float speed = 4;
+    private int currentDirection;
     private Rigidbody2D mushroomBody;
-    public float upSpeed = 10;
-    private bool onGroundState = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Spring out of the box once instantiated
-
-        // Pick a random direction to start moving
+        mushroomBody = GetComponent<Rigidbody2D>();
+        // random left or right
+        int randbinary = UnityEngine.Random.Range(0, 2);
+        if (randbinary == 0) {
+            currentDirection = 1;
+        } else {
+            currentDirection = -1;
+        }
+        mushroomBody.AddForce(new Vector2(0, 0.15f), ForceMode2D.Impulse);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        mushroomBody.velocity = new Vector2(currentDirection * speed, mushroomBody.velocity.y);
     }
 
-    private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.CompareTag("Player"))
+    void OnCollisionEnter2D(Collision2D col) 
+    {
+        if (col.gameObject.CompareTag("Obstacles")) 
         {
-            Debug.Log("Mushroom collided with Mario");
-            mushroomBody.velocity = Vector2.zero; // Stop moving
+            Debug.Log("Mushroom hit pipe!");
+            currentDirection *= -1;
         }
-        else if (other.gameObject.CompareTag("Obstacles") || other.gameObject.CompareTag("Ground"))
+        else if (col.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Mushroom collided with " + other.gameObject.tag);
+            Debug.Log("Mushroom hit Mario!");
+            mushroomBody.velocity = Vector2.zero;
+            currentDirection = 0;
         }
-        else if (other.gameObject.CompareTag("Pipe"))
-        {
-            Debug.Log("Mushroom collided with pipe");
-            float moveHorizontal = Input.GetAxis("Horizontal");
-            if (Mathf.Abs(moveHorizontal) > 0)
-            {
-                Vector2 movement = new Vector2(moveHorizontal, 0);
-                // send help
-            }
-        }
+    }
+
+    void OnBecameInvisible()
+    {
+        Debug.Log("RIP Mushroom");
+        Destroy(gameObject);
     }
 }
