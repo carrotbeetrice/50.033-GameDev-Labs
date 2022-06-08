@@ -15,16 +15,16 @@ TagManager:
   - 
   - Water
   - UI
-  - QuestionBox
-  - Obstacles
-  - Spawned
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - BG1
+  - BG2
+  - BG3
+  - BG4
+  - BG5
+  - BG6
+  - BG7
+  - BG8
+  - BG9
+  - BG10
   - 
   - 
   - 
@@ -45,18 +45,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Background
-    uniqueID: 1195624739
-    locked: 0
-  - name: Player
+  - name: Foreground
     uniqueID: 4150708693
-    locked: 0
-  - name: Enemy
-    uniqueID: 3308977319
-    locked: 0
-  - name: Obstacles
-    uniqueID: 342041969
-    locked: 0
-  - name: Consumable
-    uniqueID: 4189138341
     locked: 0

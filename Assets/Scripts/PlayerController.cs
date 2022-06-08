@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private bool countScoreState = false;
     private Animator marioAnimator;
     private AudioSource marioAudio;
+    public ParticleSystem dustCloud;
 
     // Start is called before the first frame update
     void Start()
@@ -98,6 +99,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Ground")  || other.gameObject.CompareTag("Obstacles"))
         {
             Debug.Log("Mario collided with " + other.gameObject.tag);
+            dustCloud.Play();
             onGroundState = true; // Back on ground
             marioAnimator.SetBool("onGround", onGroundState);
             countScoreState = false; // Reset score state

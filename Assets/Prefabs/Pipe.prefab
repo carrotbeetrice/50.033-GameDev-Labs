@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 120316908258902268}
   - component: {fileID: 120316908258902259}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: PipeBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 09176444e09dc4f61b8a160fc34efa34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 342041969
-  m_SortingLayer: 4
+  m_SortingLayerID: -144258603
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21301222, guid: 855dc7396df3c4e49ac4d21234eac5e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 120316909049545866}
   - component: {fileID: 120316909049545865}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: PipeTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 09176444e09dc4f61b8a160fc34efa34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -154,8 +154,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 342041969
-  m_SortingLayer: 4
+  m_SortingLayerID: -144258603
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21301220, guid: 855dc7396df3c4e49ac4d21234eac5e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 120316909268446099}
   - component: {fileID: 120316909268446108}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Pipe
   m_TagString: Obstacles
   m_Icon: {fileID: 0}

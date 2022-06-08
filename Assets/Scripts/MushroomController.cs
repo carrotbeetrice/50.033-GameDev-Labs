@@ -39,8 +39,8 @@ public class MushroomController : MonoBehaviour
         else if (col.gameObject.CompareTag("Player"))
         {
             Debug.Log("Mushroom hit Mario!");
-            mushroomBody.velocity = Vector2.zero;
-            currentDirection = 0;
+            // mushroomBody.velocity = Vector2.zero;
+            // currentDirection = 0;
         }
     }
 
