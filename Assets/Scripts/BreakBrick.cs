@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BreakBrick : MonoBehaviour
 {
+    public GameConstants gameConstants;
     private bool broken = false;
     public GameObject debrisPrefab;
-    private int debrisCount = 5; // Assume 5 debris per box
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +27,7 @@ public class BreakBrick : MonoBehaviour
             Debug.Log("Mario collided with breakable");
             broken = true;
 
-            for (int i = 0; i < debrisCount; i++)
+            for (int i = 0; i < gameConstants.spawnNumberOfDebris; i++)
             {
                 Instantiate<GameObject>(debrisPrefab, transform.position, Quaternion.identity);
             }

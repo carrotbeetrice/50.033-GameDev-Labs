@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameConstants gameConstants;
     public float speed;
     private Rigidbody2D marioBody;
     public float maxSpeed = 10;
@@ -13,10 +14,10 @@ public class PlayerController : MonoBehaviour
     private bool onGroundState = true;
     private SpriteRenderer marioSprite;
     private bool faceRightState = true;
-    public Transform enemyLocation;
-    public Text scoreText;
-    private int score = 0;
-    private bool countScoreState = false;
+    // public Transform enemyLocation;
+    // public Text scoreText;
+    // private int score = 0;
+    // private bool countScoreState = false;
     private Animator marioAnimator;
     private AudioSource marioAudio;
     public ParticleSystem dustCloud;
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
         marioSprite = GetComponent<SpriteRenderer>();
         marioAnimator = GetComponent<Animator>();
         marioAudio = GetComponent<AudioSource>();
+        GameManager.OnPlayerDeath += PlayerDiesSequence;
     }
 
     // Update is called once per frame
@@ -54,16 +56,21 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // When jumping, Gomba is near Mario and we haven't registered our score
-        if (!onGroundState && countScoreState) 
+        if (Input.GetKeyDown("z"))
         {
-            if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
-            {
-                countScoreState = false;
-                score++;
-                Debug.Log(score);
-            }
+            CentralManager.centralManagerInstance.consumePowerup(KeyCode.Z, this.gameObject);
         }
+
+        // When jumping, Gomba is near Mario and we haven't registered our score
+        // if (!onGroundState && countScoreState) 
+        // {
+        //     if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
+        //     {
+        //         countScoreState = false;
+        //         score++;
+        //         Debug.Log(score);
+        //     }
+        // }
     }
 
     private void FixedUpdate() {
@@ -89,7 +96,7 @@ public class PlayerController : MonoBehaviour
             marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
             onGroundState = false;
             marioAnimator.SetBool("onGround", onGroundState);
-            countScoreState = true; // Check if Gomba is underneath when jumping
+            // countScoreState = true; // Check if Gomba is underneath when jumping
             PlayJumpSound();
         }
            
@@ -98,28 +105,51 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.CompareTag("Ground")  || other.gameObject.CompareTag("Obstacles"))
         {
-            Debug.Log("Mario collided with " + other.gameObject.tag);
+            // Debug.Log("Mario collided with " + other.gameObject.tag);
             dustCloud.Play();
             onGroundState = true; // Back on ground
             marioAnimator.SetBool("onGround", onGroundState);
-            countScoreState = false; // Reset score state
+            // countScoreState = false; // Reset score state
             // marioBody.velocity = Vector2.zero;
-            scoreText.text = "Score: " + score.ToString();
+            // scoreText.text = "Score: " + score.ToString();
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("Mario collided with Gomba");
+    // private void OnTriggerEnter2D(Collider2D other) {
+    //     if (other.gameObject.CompareTag("Enemy"))
+    //     {
+    //         Debug.Log("Mario collided with Gomba");
 
-            // Game over on collision; restart scene
-            Scene scene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(scene.name);
-        }
-    }
+    //         // Game over on collision; restart scene
+    //         // Scene scene = SceneManager.GetActiveScene();
+    //         // SceneManager.LoadScene(scene.name);
+    //     }
+    // }
 
     void PlayJumpSound() {
         marioAudio.PlayOneShot(marioAudio.clip);
+    }
+
+    void PlayerDiesSequence()
+    {
+        Debug.Log("Mario dead");
+        dustCloud.Play();
+        StartCoroutine(die());
+    }
+
+    IEnumerator die()
+    {
+        float stepper = 1.0f / 5.0f;
+
+        for (int i = 0; i < 5; i++)
+        {
+            this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y - stepper, this.transform.localScale.z);
+
+            // Make sure enemy is still above ground
+            this.transform.position = new Vector3(this.transform.position.x, gameConstants.groundSurface + GetComponent<SpriteRenderer>().bounds.extents.y, this.transform.position.z);
+            yield return null;
+        }
+        CentralManager.centralManagerInstance.restartGame();
+        yield break;
     }
 }

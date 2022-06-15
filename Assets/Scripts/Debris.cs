@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Debris : MonoBehaviour
 {
+    public GameConstants gameConstants;
     private float speed = 1;
-    private int horizontalDirection;
     private Rigidbody2D debrisBody;
     private Vector3 scaler;
 
@@ -29,14 +29,14 @@ public class Debris : MonoBehaviour
     IEnumerator ScaleOut()
     {
         Vector2 direction = new Vector2(Random.Range(-1.0f, 1.0f), 1);
-        debrisBody.AddForce(direction.normalized * 10, ForceMode2D.Impulse);
-        debrisBody.AddTorque(10, ForceMode2D.Impulse);
+        debrisBody.AddForce(direction.normalized * gameConstants.breakDebrisForce, ForceMode2D.Impulse);
+        debrisBody.AddTorque(gameConstants.breakDebrisTorque, ForceMode2D.Impulse);
 
         // Wait for next frame
         yield return null;
 
         // Render for 0.5 seconds
-        for (int step = 0; step < 30; step++)
+        for (int step = 0; step < gameConstants.breakTimeStep; step++)
         {
             this.transform.localScale = this.transform.localScale - scaler;
             yield return null;
