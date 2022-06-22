@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4daf60807da841a993323f96dd9f97f, type: 3}
   m_Name: GameConstants
   m_EditorClassIdentifier: 
-  groundSurface: -1
+  groundSurface: -4
+  playerStartingMaxSpeed: 5
+  playerMaxJumpSpeed: 30
+  playerDefaultForce: 150
   enemyPoolSize: 10
   maxOffset: 4
   enemyPatrolTime: 2

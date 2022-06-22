@@ -51,4 +51,19 @@ public class CentralManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    public void changeScene()
+    {
+        StartCoroutine(LoadNextAsyncScene("MarioLevel2"));
+    }
+
+    IEnumerator LoadNextAsyncScene(string sceneName)
+    {
+        // Loads scene in background while current scene runs
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
 }

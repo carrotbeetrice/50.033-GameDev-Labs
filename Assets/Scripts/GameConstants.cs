@@ -5,10 +5,19 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameConstants", menuName = "ScriptableObjects/GameConstants", order = 1)]
 public class GameConstants : ScriptableObject
 {
-    public float groundSurface = -1;
+    public float groundSurface = -4;
+
+    // For consumables
+    public float consumablePatrolSpeed = 4;
+    public float consumableinitialUpSpeed = 0.15f;
+
+    // Mario basic starting values
+    public int playerStartingMaxSpeed = 5;
+    public int playerMaxJumpSpeed = 30;
+    public int playerDefaultForce = 150;
 
     // For SpawnManager.cs
-    public int enemyPoolSize = 10;
+    public int enemyPoolSize = 2;
 
     // Scoring system
     int currentScore;
